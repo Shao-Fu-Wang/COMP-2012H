@@ -87,12 +87,13 @@ void test_empty_size() {
     push_back(deque, 10);
     cout << "deque is empty: " << (empty(deque) ? "true" : "false") << endl;
     cout << "size of deque: " << size(deque) << endl;
-
-    push_back(deque, 15);
+    push_back(deque, 10);
+    
+    // print_deque(deque);
     cout << "deque is empty: " << (empty(deque) ? "true" : "false") << endl;
     cout << "size of deque: " << size(deque) << endl;
-
     push_front(deque, 20);
+    
     cout << "deque is empty: " << (empty(deque) ? "true" : "false") << endl;
     cout << "size of deque: " << size(deque) << endl;
 

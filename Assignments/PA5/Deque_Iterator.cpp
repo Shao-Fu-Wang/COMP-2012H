@@ -17,7 +17,11 @@ void set_node(Iterator& it, Node* new_node) {
 
 Iterator next(const Iterator& it) {
     Iterator next_it = it;
-    if (it.current == it.last - 1) {
+    if (it.current == it.last) {
+        set_node(next_it, it.node->next);
+        next_it.current = next_it.first + 1;
+    } 
+    else if (it.current == it.last - 1){
         set_node(next_it, it.node->next);
         next_it.current = next_it.first;
     } 
