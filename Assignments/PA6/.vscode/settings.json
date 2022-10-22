@@ -4,6 +4,13 @@
         "typeinfo": "cpp",
         "iosfwd": "cpp",
         "iostream": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "array": "cpp",
+        "compare": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "*.tcc": "cpp"
     }
 }

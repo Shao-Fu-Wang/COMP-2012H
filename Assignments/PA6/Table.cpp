@@ -13,62 +13,55 @@ Table::Table(const String &name) {
     this->name = name;
 }
 
-Table::Table(ifstream &ifs, const String &name){
-    primaryKey = nullptr;
-    fieldHead = nullptr;
-    numRows = 0;
-    numCols = 0;
-    tableSize = 100;
-    this->name = name;
-
-    int col, row;
-    String temp, fn; 
-    char type;
-    ifs >> col >> row;
-    for (int i = 0; i < col; i++) {
-        if (i == col - 1) {
+Table::Table(ifstream &ifs, const String &name) : Table(name) {
+    int cols, rows;
+    ifs >> cols >> rows;
+    String temp;
+    String fn;
+    char flag;
+    for (int i = 0; i < cols; i++) {
+        if (i == cols - 1) {
             getline(ifs, temp, '\n');
         }
         else { 
-            getline(ifs, temp, ','); 
+            getline(ifs, temp, ',');
         }  
-        type = temp[temp.length()-1];
-
+        flag = temp[temp.length() - 1];
         if (temp[0] == '*') {
             fn = temp.substr(1, temp.length() - 3);
-            setPrimaryKey(fn);
-            if(type == '0'){
+            if(flag == '0'){
                 addField(i, fn, INT);
             }
-            else{
+            else if(flag == '1'){
                 addField(i, fn, STRING);
             }
-        } 
-        else {
+            setPrimaryKey(fn); 
+        } else {
             fn = temp.substr(0, temp.length() - 2);
-            if(type == '0'){
+            if(flag == '0'){            // fuckkkkkkkk '' != "" 
                 addField(i, fn, INT);
             }
-            else{
+            else if(flag == '1'){
                 addField(i, fn, STRING);
             }
         }
     }
-
-    for (int i = 0; i < row; i++) {
-        String* f = new String[col];
-        for (int j = 0; j < col; j++) {
-            if (j == col - 1) {
+    
+    String* f = new String[cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (j == cols - 1){
                 getline(ifs, f[j], '\n');
-            }
-            else { 
-                getline(ifs, f[j], ','); 
+            } 
+            else {
+                getline(ifs, f[j], ',');
             }  
         }
         addRecord(i, f);
-        delete [] f;
     }
+    delete [] f;
 }
+
 
 Table::~Table() {
     Field* f = fieldHead;
@@ -84,6 +77,7 @@ Table::~Table() {
     }
 }
 
+
 void Table::addRecord(int index, String *record) { 
     if (record == nullptr) {
         cout << "Record is empty.\n";
@@ -96,7 +90,7 @@ void Table::addRecord(int index, String *record) {
     bool primaryKeyError = false;
     bool typeMismatchError = false;
     int col = 0;
-    for (Field* f = fieldHead; ; f = f->next) {
+    for (Field* f = fieldHead; f != nullptr; f = f->next) {
         if (primaryKey == f) {
             for (int i = 0; i < numRows; ++i) { 
                 if (record[col] == f->column[i]) { 
@@ -128,7 +122,7 @@ void Table::addRecord(int index, String *record) {
     else {
         if (numRows == tableSize) {
             tableSize += 100; 
-            for (Field* f = fieldHead; f; f = f->next) { 
+            for (Field* f = fieldHead; f != nullptr; f = f->next) { 
                 String* new_col = new String[tableSize];
                 for (int i = 0; i < numRows; i++) { 
                     new_col[i] = f->column[i];
@@ -139,7 +133,7 @@ void Table::addRecord(int index, String *record) {
             }
         }
         int col = 0;
-        for (Field* f = fieldHead; ;f = f->next) {
+        for (Field* f = fieldHead; f != nullptr;f = f->next) {
             for (int i = numRows; i > index; i--) {
                 f->column[i] = f->column[i-1];
             }
@@ -150,6 +144,7 @@ void Table::addRecord(int index, String *record) {
     }
 
 }
+
 
 void Table::addField(int index, const String &name, TYPE type) { 
     if (index > numCols || index < 0) { 

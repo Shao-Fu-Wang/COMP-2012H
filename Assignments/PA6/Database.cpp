@@ -7,36 +7,39 @@
 
 using namespace std;
 
-Database::Database(const String &name, int numTables) {
+Database::Database(const String &name, int numTables) { // should be working
     currentTable = nullptr;
     this->numTables = numTables;
     this->name = name;
     Table* nt = nullptr;
-    char size[69] = "Table_";
-    for (int n = numTables; n > 0; --n) {   // from back to front
-        Table* table = new Table(size);
-        // shifting 6 "table"
-        snprintf(size + 6, 10, "%d", n);
-
+    char tablestr[69] = "Table_";
+    for (int i = numTables; i > 0; --i) {
+        snprintf(tablestr + 6, 10, "%d", i);
+        Table* table = new Table(tablestr);
         table->next = nt;
         nt = table;
     }
-    tableHead = nt;
+    this->tableHead = nt; // links to the first table
 }
 
 Database::Database(const String &filename) {
-    ifstream ifs(filename.getStr());    // get file name
-    int tnumber;
-    ifs >> tnumber;
+    ifstream ifs(filename.getStr());
     getline(ifs, name, '\n');
-    numTables = 0;
-    tableHead = nullptr;
+    this->numTables = 0;
+    this->tableHead = nullptr;
+    int tables;
+    ifs >> tables;
 
     String tname;
-    for (int i = 0; i < tnumber; i++) {
+    for (int t = 0; t < tables; t++) {
         getline(ifs, tname, '\n'); 
-        Table* newtable = new Table(ifs,  tname);
-        addTable(newtable);
+        Table* table = new Table(ifs,  tname);
+        if(addTable(table)){
+
+        }
+        else{
+            // exception?
+        }
     }
     ifs.clear();
     ifs.close();
@@ -49,7 +52,7 @@ Database::~Database() {
     }
     else{
         Table* nt = t->next;
-        for (int i = 0; i < numTables; ++i) { 
+        for (int n = 0; n < numTables; n++) { 
             delete t;
             t = nt;
             if (t == nullptr) {
@@ -60,9 +63,10 @@ Database::~Database() {
             }
         }
     }
-    
+   
 }
 
+//--------------------------above checked----------------------------
 bool Database::addTable(Table *table) {
     if (table == nullptr) {
         cout << "Table is a null pointer.\n";
