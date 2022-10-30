@@ -1,0 +1,15 @@
+release/tst_testbonustask4.o
+release/dictionary.o
+release/key.o
+release/keyboard.o
+release/letterbox.o
+release/roundwindow.o
+release/solver.o
+release/wordleround.o
+release/qrc_resource.o
+release/moc_tst_testbonustask4.o
+release/moc_key.o
+release/moc_keyboard.o
+release/moc_letterbox.o
+release/moc_roundwindow.o
+release/moc_wordleround.o

@@ -1,0 +1,17 @@
+debug/tst_testtask2.o
+debug/dictionary.o
+debug/key.o
+debug/keyboard.o
+debug/letterbox.o
+debug/regularroundwindow.o
+debug/regularwordleround.o
+debug/roundwindow.o
+debug/solver.o
+debug/wordleround.o
+debug/qrc_resource.o
+debug/moc_tst_testtask2.o
+debug/moc_key.o
+debug/moc_keyboard.o
+debug/moc_letterbox.o
+debug/moc_roundwindow.o
+debug/moc_wordleround.o

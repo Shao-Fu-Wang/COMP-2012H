@@ -15,7 +15,8 @@ Table::Table(const String &name) {
 
 Table::Table(ifstream &ifs, const String &name) : Table(name) {
     int cols, rows;
-    ifs >> cols >> rows;
+    ifs >> cols;
+    ifs >> rows;
     String temp;
     String fn;
     char flag;
