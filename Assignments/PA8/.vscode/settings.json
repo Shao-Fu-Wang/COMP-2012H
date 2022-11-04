@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "string": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "streambuf": "cpp",
+        "functional": "cpp",
+        "new": "cpp"
+    }
+}
